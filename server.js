@@ -9,7 +9,7 @@ app.get('/', (req, res) => {
 	
 	res
 		.status(200)
-		.send('Homepage');
+		.json({message: 'Welcome to meetup app'});
 });
 
 app.get('*', (req, res) => {
