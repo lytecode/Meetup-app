@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Half Slider - Start Bootstrap Template</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./css/main.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="/">DevSquare</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/meetups.html"><i class="fas fa-users"></i> View meetups</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#"><i class="fas fa-map-marker-alt"></i> Create Meetup</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fas fa-unlock"></i> Sign in</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fas fa-user-plus"></i> Sign up</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="fas fa-user-circle"></i> Profile</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <!-- Page Content -->
+    <section class="py-5">
+      <div class="container">
+        <h1>Meetup</h1>
+
+        <div class="meetup-detail card">
+            <div class="row">
+                <div class="col-sm-12">
+                <h2 class="float-left event-group">forLoop</h2>
+
+                <!-- Modal -->
+                <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary float-right edit" data-toggle="modal" data-target="#editModal">Edit</button>
+      
+                <!-- Modal -->
+                <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title">Edit</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="meetup-form">
+                            <form action="#" method="post">
+                                <div class="form-group">
+                                  <label for="group">Group</label>
+                                  <input type="text" class="form-control" placeholder="Group">
+                                </div>
+                                <div class="form-group">
+                                  <label for="theme">Theme</label>
+                                  <input type="text" class="form-control" placeholder="Theme">
+                                </div>
+                                <div class="form-group">
+                                  <label for="description">Description</label>
+                                  <input type="text" class="form-control" placeholder="Description">
+                                </div>
+                                <div class="form-group">
+                                  <label for="venue">Venue</label>
+                                  <input type="text" class="form-control" placeholder="Venue">
+                                </div>
+                                <div class="form-group">
+                                  <label for="time">Time</label>
+                                  <input type="text" class="form-control" placeholder="Time">
+                                </div>
+                                <div class="form-group">
+                                  <label for="image upload">Meetup Image</label>
+                                  <input type="file" class="form-control-file">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Update</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </form>
+                        </div>
+                        <!-- <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                        </div> -->
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <img class="img-fluid" src="./img/meetup-4.jpg" alt="" style="margin-top: 10px; margin-left: auto; margin-right: auto; width: 70%; display: block">
+            
+            <div class="description col-md- float-right">
+                <h6><strong>forLoop Lagos</strong>: Building for the next Billion Users</h6>
+                <p><i class="fas fa-map-marker-alt"></i><strong> Venue:</strong> Gbagada Event Center, Gbagada Lagos <br>
+                    <i class="fas fa-clock"></i><strong> Time:</strong> 10:00am prompt
+                </p>
+                <a class="btn btn-success float-right" href="#">Register</a>
+            </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; DevSquare 2018</p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+
+</html>

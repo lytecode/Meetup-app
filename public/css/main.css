@@ -1,0 +1,70 @@
+.main {
+  padding-top: 3rem !important;
+  padding-bottom: 3rem !important;
+}
+
+.carousel-item {
+  height: 65vh;
+  min-height: 300px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.meetup-item{
+  width:70%; 
+  height: 20%; 
+  background-color:whitesmoke;
+  margin:30px auto 0 auto;
+  box-shadow: 5px 10px teal;
+}
+
+.container h1{
+  text-align: center;
+  margin: 10px 0 10px 0;
+}
+
+.description{
+  /* background-color: brown; */
+  color: black;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.center-btn{
+  margin: auto 0 auto 0;
+}
+
+.meetup-form{
+  width: 70%;
+  margin: auto;
+}
+
+.meetup-detail{
+  width: 70%;
+  background-color: whitesmoke;
+  margin: 20px auto 10px auto;
+  /* height: 90%; */
+}
+
+.edit, .event-group{
+  margin: 10px 10px 0 0;
+}
+
+.signin-form{
+  width: 50%;
+  height: 200%;
+  margin: auto;
+  box-shadow: 5px 5px gray;
+}
+
+.sign{
+  margin: 10% 0 10%;
+}
+
+footer{
+  border-top: 3px solid #dc3545!important;
+}
