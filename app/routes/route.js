@@ -20,8 +20,27 @@ const urlencodedParser = bodyParser.urlencoded({extended: false});
 router.get('/', (req, res, next) => res.render('index'));
 
 router
-	.get('/login', (req, res, next) => res.render('login'))
-	.post('/login', (req, res, next) => {});
+	.get('/login', (req, res, next) => res.render('login', {message: ''}))
+	.post('/login', urlencodedParser, (req, res, next) => {
+		const checkUser = `SELECT username, password FROM users where username ='${req.body.username}' AND password='${req.body.password}'`;
+		conex.raw(checkUser)
+			.then(data => {
+				if( data[0].length <= 0){
+					const message = 'Username and password mismatch';
+					res.render('login', {message: message});
+				}else{
+					const username = data[0][0]['username'];
+					const password = data[0][0]['password'];
+					if(req.body.username === username && req.body.password === password){
+						res.redirect('/');
+					}else{
+						const message = 'Username or password mismatch';
+						res.render('login', {message: message});
+					}
+				}
+			})
+			.catch(err => res.send(err))
+	});
 
 router
 	.get('/register',  (req, res, next) => res.render('register', { message: ''}))
