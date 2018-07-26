@@ -76,7 +76,30 @@ router
 
 	});
 
-router.get('/createmeetup', (req, res, next) => res.render('createmeetup'));
+router.get('/createmeetup', (req, res, next) => res.render('createmeetup'))
+	  .post('/createmeetup', urlencodedParser, (req, res, next) => {
+		  const meetup = {
+			group: req.body.group,
+			topic: req.body.topic,
+			description: req.body.description,
+			venue: req.body.venue,
+			schedule: req.body.schedule,
+			banner: req.body.banner
+		  }
+		  
+		  console.log('meetup: ', meetup)
+
+		  const query = `INSERT INTO events (organizer, theme, description, venue, period, image) 
+							  VALUES ('${meetup.group}','${meetup.topic}', '${meetup.description}', '${meetup.venue}', '${meetup.period}', '${meetup.image}' )`;
+			
+		  //console.log(query);
+		  conex.raw(query)
+		  		.then(data => {
+					  const message = 'Meetup created successfully';
+					  res.redirect('/meetups');
+				  })
+				.catch(err => res.send(err))
+	  })
 
 router.get('/meetup', (req, res, next) => res.render('meetup'));
 
