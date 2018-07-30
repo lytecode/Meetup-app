@@ -65,13 +65,17 @@
           <form action="/register" method="POST">
               <div class="form-group">
                 <label for="username"><i class="fas fa-user fa-lg"></i> Username</label>
-                <input type="text" class="form-control" name="username" placeholder="Username" required>
+                <input type="text" class="form-control" name="username" placeholder="username" required>
               </div>
               <div class="form-group">
                 <label for="password"><i class="fas fa-lock fa-lg"></i> Password</label>
-                <input type="text" class="form-control" name="password" placeholder="password" required>
+                <input type="password" class="form-control" name="password" placeholder="password" required>
               </div>
-              
+              <div class="form-group">
+                <label for="admin Code"><i class="fas fa-lock fa-lg"></i> Admin Code</label>
+                <input type="password" class="form-control" name="adminCode" placeholder="admin code">
+              </div>
+
               <button type="submit" class="btn btn-primary" style="margin-bottom:10px">Sign up</button>
               <p>
                 Already registered? <a href="/login">Sign in</a>
