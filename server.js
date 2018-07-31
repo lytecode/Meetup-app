@@ -2,9 +2,11 @@ const express =  require('express'),
 	  app = express(),
 	  bodyParser = require('body-parser'),
 	  ejs = require('ejs'),
+	  flash = require('connect-flash'),
 	  mongoose = require('mongoose'),
 	  passport = require('passport'),
 	  LocalStrategy = require('passport-local').Strategy,
+	  session = require('express-session'),
 	  urlencodedParser = bodyParser.urlencoded({extended: false});
 	  require('dotenv').config();
 	  
@@ -25,6 +27,13 @@ app.set('view engine', 'ejs');
 
 
 //passport config
+app.use(require('express-session')({
+	secret: 'Get this baby cooking',
+	resave: false,
+	saveUninitialized: false
+}))
+.use(flash())
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));

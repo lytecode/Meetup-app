@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 
-const meetupSchema = new mongoose.schema({
+const meetupSchema = new mongoose.Schema({
 	group: String,
 	topic: String,
 	venue: String,
