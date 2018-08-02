@@ -6,7 +6,7 @@ const meetupSchema = new mongoose.Schema({
 	topic: String,
 	venue: String,
 	time: String,
-	banner: String,
+	imageURL: String,
 	author:{
 		id: {
 			type: mongoose.Schema.Types.ObjectId,

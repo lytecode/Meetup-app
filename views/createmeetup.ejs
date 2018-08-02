@@ -57,7 +57,7 @@
       <div class="container">
         <h1>Create Meetup</h1>
         <div class="meetup-form">
-            <form action="#" method="POST">
+            <form action="/createmeetup" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                   <label for="group">Group</label>
                   <input type="text" class="form-control" name="group" placeholder="Group">
@@ -75,8 +75,8 @@
                   <input type="datetime-local" class="form-control" name="time" placeholder="Time">
                 </div>
                 <div class="form-group">
-                  <label for="image upload">Meetup Image</label>
-                  <input type="file" name="banner" class="form-control-file">
+                  <label for="image">Meetup Image</label>
+                  <input type="file" id="image" name="image" class="form-control-file">
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>

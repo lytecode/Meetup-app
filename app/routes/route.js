@@ -4,7 +4,33 @@ const router = express.Router();
 const passport = require('passport');
 const User = require('../models/user');
 const Meetup = require('../models/meetup');
+const multer = require('multer');
 require('dotenv').config();
+
+//multer configuration
+const multerConfig = {
+	storage: multer.diskStorage({
+		destination: function(req, file, next){
+			next(null, './public/images');
+		},
+		filename: function(req, file, next){
+			const ext = file.mimetype.split('/')[1];
+			next(null, file.fieldname + '-' + Date.now() + '.' + ext);
+		}
+	}),
+	filefilter: function(req, file, next){
+		const image = file.mimetype.startWith('image');
+		if(!file){
+			next();
+		}
+		if(image){
+			next(null, true);
+		}
+		else{
+			next({message: 'Only image file is allowed'}, false)
+		}
+	}
+}
 
 
 function loginRequired(req, res, next){
@@ -64,14 +90,24 @@ router
 	});
 
 router.get('/createmeetup', loginRequired, (req, res, next) => res.render('createmeetup'))
-	  .post('/createmeetup', loginRequired, (req, res, next) => {
+	  .post('/createmeetup', loginRequired, multer(multerConfig).single('image'), (req, res, next) => {
 		  //console.log(req.user);
+		  //console.log(req.body)
+		  //res.send('image uploaded')
+		  if(!req.file){
+			//   console.log('file: ', req.file);
+			//   req.body.image = req.file.filename;
+			//   console.log(req.body.image)
+
+			//   console.log('body: ', req.body);
+		  }
 
 		  const newMeetup = new Meetup({
 			  group: req.body.group,
 			  topic: req.body.topic,
 			  venue: req.body.venue,
 			  time: req.body.time,
+			  imageURL: req.file.path,
 			  author: {
 				  id: req.user._id,
 				  username: req.user.username
