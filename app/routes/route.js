@@ -85,8 +85,6 @@ router
 			res.clearCookie('connect.sid'),
 			res.redirect('/')
 		})
-		// req.logout();
-		// res.redirect('/');
 	});
 
 router.get('/createmeetup', loginRequired, (req, res, next) => res.render('createmeetup'))
@@ -125,9 +123,28 @@ router.get('/createmeetup', loginRequired, (req, res, next) => res.render('creat
 		
 	  })
 
-router.get('/meetup', (req, res, next) => res.render('meetup'));
+router.get('/meetup/:id', (req, res, next) => {
+	Meetup.find({_id: req.params.id}, (err, meetup) => {
+		if(err){
+			console.log(err);
+		}
+		
+		res.render('meetup', {meetup: meetup});
+	});
+});
 
-router.get('/meetups', (req, res, next) => res.render('viewmeetups'));
+
+router.get('/meetups', (req, res, next) => {
+	//find all meetups
+	Meetup.find({}, (err, meetups) => {
+		if(err){
+			console.log(err);
+		}
+		
+		res.render('viewmeetups', {meetups: meetups});
+	})
+
+});
 
 //router.get('/user/:id')
 router.get('*', (req, res, next) => {

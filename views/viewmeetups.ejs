@@ -51,47 +51,34 @@
       </div>
     </nav>
 
-
     <!-- Page Content -->
     <section class="main">
       <div class="container">
         <h1 >View Upcoming Meetups</h1>
 
-        <div class="meetup-item row">
-            <div class="picture col-md-3 float-left">
-              <img class="icon img-fluid" src="./img/meetup-2.jpg" alt="forLoop Meetup banner" >
-            </div>
-            <div class="description col-md-7 float-right">
-              <h6><strong>forLoop Lagos</strong>: Building for the next Billion Users</h6>
-                <p><i class="fas fa-map-marker-alt"></i> Gbagada Event Center, Gbagada Lagos <br>
-                  <i class="fas fa-clock"></i> 10:00am prompt</p>
-              <a class="btn btn-success float-right" href="/meetup">View meetup</a>
-            </div>
-          </div>
-
-          <div class="meetup-item row">
-              <div class="picture col-md-3 float-left">
-                <img class="icon img-fluid" src="./img/meetup-3.jpg" alt="forLoop Meetup banner" >
-              </div>
-              <div class="description col-md-7 float-right">
-                <h6><strong>forLoop Lagos</strong>: Building for the next Billion Users</h6>
-                  <p><i class="fas fa-map-marker-alt"></i> Gbagada Event Center, Gbagada Lagos <br>
-                    <i class="fas fa-clock"></i> 10:00am prompt</p>
-                <a class="btn btn-success float-right" href="/meetup">Register</a>
-              </div>
-          </div>
+        <% if(meetups.length > 0){  
+          for(let i=0; i<meetups.length; i++){  
+        %>
 
             <div class="meetup-item row">
                 <div class="picture col-md-3 float-left">
-                  <img class="icon img-fluid" src="./img/meetup-4.jpg" alt="forLoop Meetup banner" >
+                  <img class="icon img-fluid" src="<%= meetups[i].imageURL %>" alt="<%=meetups[i].group%> Meetup banner" >
                 </div>
                 <div class="description col-md-7 float-right">
-                  <h6><strong>forLoop Lagos</strong>: Building for the next Billion Users</h6>
-                    <p><i class="fas fa-map-marker-alt"></i> Gbagada Event Center, Gbagada Lagos <br>
-                      <i class="fas fa-clock"></i> 10:00am prompt</p>
-                  <a class="btn btn-success float-right" href="/meetup">Register</a>
+                  <h6><strong><%=meetups[i].group%></strong>: <%= meetups[i].topic %></h6>
+                    <p><i class="fas fa-map-marker-alt"></i><%= meetups[i].venue %><br>
+                      <i class="fas fa-clock"></i><%= meetups[i].time %> prompt</p>
+                  <a class="btn btn-success float-right" href="/meetup/<%= meetups[i]._id %>">View meetup</a>
                 </div>
             </div>
+
+        <% 
+            } 
+         } 
+         %>
+          
+
+            
       </div>
     </section>
 
