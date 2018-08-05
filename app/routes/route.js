@@ -47,10 +47,10 @@ router
 	})
 
 	//HOME PAGE
-	.get('/', (req, res, next) => res.render('index'));
+	.get('/', (req, res, next) => res.render('index', {user: req.user}));
 
 router
-	.get('/register',  (req, res, next) => res.render('register', { message: ''}))
+	.get('/register',  (req, res, next) => res.render('register', { message: '', user: req.user}))
 	.post('/register', (req, res) => {
 		const newUser = new User({
 			username: req.body.username
@@ -72,11 +72,11 @@ router
 	});
 
 router
-	.get('/login', (req, res, next) => res.render('login', {message: ''}))
+	.get('/login', (req, res, next) => res.render('login', {message: '', user: req.user}))
 	.post('/login', passport.authenticate('local', {
-		//req.flash('error', 'Wrong username, password combination'),
 		failureRedirect: '/login',
 		successRedirect: '/'
+
 	}));
 
 router
@@ -87,7 +87,7 @@ router
 		})
 	});
 
-router.get('/createmeetup', loginRequired, (req, res, next) => res.render('createmeetup'))
+router.get('/createmeetup', loginRequired, (req, res, next) => res.render('createmeetup', {user: req.user}))
 	  .post('/createmeetup', loginRequired, multer(multerConfig).single('image'), (req, res, next) => {
 		  //console.log(req.user);
 		  //console.log(req.body)
@@ -129,7 +129,7 @@ router.get('/meetup/:id', (req, res, next) => {
 			console.log(err);
 		}
 		
-		res.render('meetup', {meetup: meetup});
+		res.render('meetup', {meetup: meetup, user: req.user});
 	});
 });
 
@@ -141,18 +141,23 @@ router.get('/meetups', (req, res, next) => {
 			console.log(err);
 		}
 		
-		res.render('viewmeetups', {meetups: meetups});
+		res.render('viewmeetups', {
+			meetups: meetups,
+			user: req.user
+		});
 	})
 
 });
 
-//router.get('/user/:id')
-router.get('*', (req, res, next) => {
+router.get('/user/:id', (req, res) => {
+	if(req.user){
+		console.log('got a user:', req.user);
+		const name = req.user.name;
+	}
+})
 
-	res
-	   .status(404)
-	   .send('Page NotFound');
-});
+//router.get('/user/:id')
+router.get('*', (req, res, next) => res.render('404'));
 
 
 

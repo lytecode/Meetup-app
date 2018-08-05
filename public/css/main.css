@@ -69,6 +69,10 @@
   color: red;
 }
 
+.text{
+  margin: auto;
+}
+
 footer{
   border-top: 3px solid #dc3545!important;
 }
