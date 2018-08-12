@@ -6,7 +6,7 @@ const User = require('../models/user');
 const Meetup = require('../models/meetup');
 const multer = require('multer');
 require('dotenv').config();
-
+const middleware = require('../middleware/index');
 //multer configuration
 const multerConfig = {
 	storage: multer.diskStorage({
@@ -34,10 +34,12 @@ const multerConfig = {
 
 
 function loginRequired(req, res, next){
-	if(!req.isAuthenticated()){
-		return res.redirect('/login')
+	if(req.isAuthenticated()){
+		return next();
 	}
-	next();
+	//next();
+	req.flash('error', 'You must be signed in to do that!');
+	res.redirect('/login');
 }
 
 router
@@ -74,8 +76,10 @@ router
 router
 	.get('/login', (req, res, next) => res.render('login', {message: '', user: req.user}))
 	.post('/login', passport.authenticate('local', {
+		successRedirect: '/',
 		failureRedirect: '/login',
-		successRedirect: '/'
+		failureFlash: true,
+        successFlash: 'Welcome to DevSquare!'
 
 	}));
 
@@ -89,23 +93,24 @@ router
 
 router.get('/createmeetup', loginRequired, (req, res, next) => res.render('createmeetup', {user: req.user}))
 	  .post('/createmeetup', loginRequired, multer(multerConfig).single('image'), (req, res, next) => {
-		  //console.log(req.user);
-		  //console.log(req.body)
-		  //res.send('image uploaded')
-		  if(!req.file){
-			//   console.log('file: ', req.file);
-			//   req.body.image = req.file.filename;
-			//   console.log(req.body.image)
 
-			//   console.log('body: ', req.body);
-		  }
+	  	let filePath = '/img/default-meetup-image.png';
+
+		if(req.file){
+			const path = req.file.path;
+			const regEx = /public\\(?=images)/;
+			filePath = path.replace(regEx, '\\');
+		}
+
+		console.log('new Path regex: ', filePath);
+
 
 		  const newMeetup = new Meetup({
 			  group: req.body.group,
 			  topic: req.body.topic,
 			  venue: req.body.venue,
 			  time: req.body.time,
-			  imageURL: req.file.path,
+			  imageURL: filePath,
 			  author: {
 				  id: req.user._id,
 				  username: req.user.username
@@ -133,6 +138,37 @@ router.get('/meetup/:id', (req, res, next) => {
 	});
 });
 
+router.put('/meetup/:id', loginRequired, multer(multerConfig).single('image'), middleware.checkUserMeetup, (req, res) => {
+	
+	const updateMeetup = {
+		group: req.body.group,
+		topic: req.body.topic,
+		venue: req.body.venue,
+		time: req.body.time
+	};
+
+	//add image path on image upload
+	if(req.file){
+		const regEx = /public\\(?=images)/;  //match words starting with public/images
+		updateMeetup.imageURL = req.file.path.replace(regEx, '\\');
+	}
+
+	//update the meetup
+	Meetup.findByIdAndUpdate(req.params.id, { $set: updateMeetup }, (err, meetup) => {
+		if(err){
+			console.log(err);
+			res.redirect('back');
+		}else{
+			res.redirect('/meetup/' + req.params.id);
+		}
+	})
+})
+
+//save a seat to attend the event
+router.post('/join/:id', loginRequired, (req, res) => {
+	const currentUser = req.user;
+});
+
 
 router.get('/meetups', (req, res, next) => {
 	//find all meetups
@@ -146,7 +182,6 @@ router.get('/meetups', (req, res, next) => {
 			user: req.user
 		});
 	})
-
 });
 
 router.get('/user/:id', (req, res) => {

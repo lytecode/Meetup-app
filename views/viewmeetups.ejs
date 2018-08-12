@@ -16,8 +16,8 @@
                 </div>
                 <div class="description col-md-7 float-right">
                   <h6><strong><%=meetups[i].group%></strong>: <%= meetups[i].topic %></h6>
-                    <p><i class="fas fa-map-marker-alt"></i><%= meetups[i].venue %><br>
-                      <i class="fas fa-clock"></i><%= meetups[i].time %> prompt</p>
+                    <p><i class="fas fa-map-marker-alt"></i> <%= meetups[i].venue %><br>
+                      <i class="fas fa-clock"></i> <%= meetups[i].time %> prompt</p>
                   <a class="btn btn-success float-right" href="/meetup/<%= meetups[i]._id %>">View meetup</a>
                 </div>
             </div>

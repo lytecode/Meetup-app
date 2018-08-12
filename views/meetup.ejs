@@ -28,7 +28,7 @@
                             </div>
                             <div class="modal-body">
                               <div class="meetup-form">
-                                <form action="#" method="post">
+                                <form action="/meetup/<%= meetup[0]._id %>?_method=put" enctype="multipart/form-data" method="POST">
                                     <div class="form-group">
                                       <label for="group">Group</label>
                                       <input type="text" class="form-control" name="group" value="<%= meetup[0].group %>">
@@ -46,8 +46,8 @@
                                       <input type="datetime-local" class="form-control" name="time" value="<%= meetup[0].time %>">
                                     </div>
                                     <div class="form-group">
-                                      <label for="image upload">Meetup Image</label>
-                                      <input type="file" class="form-control-file">
+                                      <label for="image">Meetup Image</label>
+                                      <input type="file" id="image" name="image" accept="image/*" class="form-control-file">
                                     </div>
                                     <button type="submit" class="btn btn-primary">Update</button>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -60,7 +60,7 @@
 
                   </div>
 
-                  <img class="img-fluid" src="/img/meetup-4.jpg" alt="" style="margin-top: 10px; margin-left: auto; margin-right: auto; width: 70%; display: block">
+                  <img class="img-fluid" src="<%= meetup[0].imageURL %>" alt="" style="margin-top: 10px; margin-left: auto; margin-right: auto; width: 70%; display: block">
                   
                   <div class="description col-md-8 float-right">
                       <h6><strong> Topic: </strong>: <%=meetup[0].topic %></h6>
