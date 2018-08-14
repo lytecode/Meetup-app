@@ -12,8 +12,8 @@ const express =  require('express'),
 	  require('dotenv').config();
 	  
 //Requiring routes
-const router = require('./app/routes/route'),
-	  User = require('./app/models/user');
+const router = require('./app/routes/route');
+const User = require('./app/models/user');
 
 
 const mongodb = require('./config/mongoDB');
