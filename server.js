@@ -19,7 +19,7 @@ const router = require('./app/routes/route');
 const mongodb = require('./config/mongoDB');
 
 
-const PORT = process.env.PORT || 5000;
+const PORT = 5000 || process.env.PORT;
 
 app.use(urlencodedParser);
 app.use(express.static('public'));
