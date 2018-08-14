@@ -64,11 +64,12 @@ router
 
 		User.register(newUser, req.body.password, (err, user) => {
 			if(err){
-				console.log("error message is: ", err.message)
-				return res.render('register', {message: err.message});				
+				console.log("error message is: ", err.message);
+				const error = err.message;
+				return res.render('register', {error, user: ''});				
 			}
 			passport.authenticate("local")(req, res, () =>{
-				res.redirect('/login');
+				res.redirect('/');
 			})
 		})
 	});

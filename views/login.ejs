@@ -6,8 +6,8 @@
         <h1><i class="fas fa-sign-in-alt"></i> Sign in</h1>
 
         <div class="signin-form">
-            <% if(message) {%>
-              <span class="error"><%=message %></span>
+            <% if(error && error.length > 0) {%>
+              <p class="alert alert-danger"><%=error %></p>
             <% } %>
           <form action="/login" method="POST">
               <div class="form-group">

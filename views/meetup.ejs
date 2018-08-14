@@ -5,8 +5,13 @@
     <section class="py-5">
       <div class="container">
         <h1>Meetup</h1>
+        <% if(error && error.length > 0) {%>
+          <p class="alert alert-danger"><%=error %></p>
+        <% } %>
 
-        <% if(meetup){ %>
+        <% if(meetup && meetup.length > 0){ 
+          console.log('got in: ', meetup);
+          %>
             <div class="meetup-detail card">
                 <div class="row">
                   <div class="col-sm-12">
