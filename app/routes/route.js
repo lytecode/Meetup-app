@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const User = require('../models/user');
+const User = require('./../models/user');
 const Meetup = require('../models/meetup');
 const multer = require('multer');
 require('dotenv').config();
