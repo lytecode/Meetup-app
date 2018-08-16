@@ -1,12 +1,13 @@
-//const bodyParser = require('body-parser');
+const fs = require('fs');
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const User = require('./../models/user');
+const User = require('../models/user');
 const Meetup = require('../models/meetup');
 const multer = require('multer');
 require('dotenv').config();
 const middleware = require('../middleware/index');
+
 //multer configuration
 const multerConfig = {
 	storage: multer.diskStorage({
@@ -37,7 +38,7 @@ function loginRequired(req, res, next){
 	if(req.isAuthenticated()){
 		return next();
 	}
-	//next();
+
 	req.flash('error', 'You must be signed in to do that!');
 	res.redirect('/login');
 }
@@ -51,6 +52,7 @@ router
 	//HOME PAGE
 	.get('/', (req, res, next) => res.render('index', {user: req.user}));
 
+//Register a User or Admin
 router
 	.get('/register',  (req, res, next) => res.render('register', { message: '', user: req.user}))
 	.post('/register', (req, res) => {
@@ -74,6 +76,7 @@ router
 		})
 	});
 
+//Login page
 router
 	.get('/login', (req, res, next) => res.render('login', {message: '', user: req.user}))
 	.post('/login', passport.authenticate('local', {
@@ -84,6 +87,7 @@ router
 
 	}));
 
+//Logout 
 router
 	.get('/logout', (req, res) => {
 		req.session.destroy((err) => {
@@ -92,43 +96,43 @@ router
 		})
 	});
 
+//Create an Event and upload an image
 router.get('/createmeetup', loginRequired, (req, res, next) => res.render('createmeetup', {user: req.user}))
 	  .post('/createmeetup', loginRequired, multer(multerConfig).single('image'), (req, res, next) => {
 
-	  	let filePath = '/img/default-meetup-image.png';
+	  	let filePath = '/img/default-meetup-image.png'; //default image
 
+		//Replace default image with User uploaded image
 		if(req.file){
 			const path = req.file.path;
 			const regEx = /public\\(?=images)/;
 			filePath = path.replace(regEx, '\\');
 		}
 
-		console.log('new Path regex: ', filePath);
+		//Create a meetup object
+		const newMeetup = new Meetup({
+			group: req.body.group,
+			topic: req.body.topic,
+			venue: req.body.venue,
+			time: req.body.time,
+			imageURL: filePath,
+			author: {
+				id: req.user._id,
+				username: req.user.username
+			}
+		});
 
 
-		  const newMeetup = new Meetup({
-			  group: req.body.group,
-			  topic: req.body.topic,
-			  venue: req.body.venue,
-			  time: req.body.time,
-			  imageURL: filePath,
-			  author: {
-				  id: req.user._id,
-				  username: req.user.username
-				}
-		  	});
-
-		   console.log('new meetup: ', newMeetup);
-
-		   newMeetup.save((err) => {
-			   if(err){
-				   console.log(err)
-			   }
-			   res.redirect('/meetups')
-		   })
+		newMeetup.save((err) => {
+			if(err){
+				console.log(err)
+			}
+			res.redirect('/meetups')
+		})
 		
-	  })
+	});
 
+//View a single event
 router.get('/meetup/:id', (req, res, next) => {
 	Meetup.find({_id: req.params.id}, (err, meetup) => {
 		if(err){
@@ -139,6 +143,8 @@ router.get('/meetup/:id', (req, res, next) => {
 	});
 });
 
+
+//Edit an event or meetup
 router.put('/meetup/:id', loginRequired, multer(multerConfig).single('image'), middleware.checkUserMeetup, (req, res) => {
 	
 	const updateMeetup = {
@@ -150,6 +156,20 @@ router.put('/meetup/:id', loginRequired, multer(multerConfig).single('image'), m
 
 	//add image path on image upload
 	if(req.file){
+		//find the previous uploaded image and remove it from public/images path
+		Meetup.findById(req.params.id, (err, meetup) => {
+			if(err){
+				req.flash('error', 'You must be doing something illegal! :)');
+			}
+			const thisPath = './public'+meetup.imageURL;
+			fs.unlink(thisPath, (err) => {
+				if(err) return console.log(err);
+
+				console.log('file deleted');
+			});
+		})
+
+		console.log(' flexing image upload b4 delete');
 		const regEx = /public\\(?=images)/;  //match words starting with public/images
 		updateMeetup.imageURL = req.file.path.replace(regEx, '\\');
 	}
