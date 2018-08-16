@@ -5,9 +5,15 @@
     <section class="py-5">
       <div class="container">
         <h1>Meetup</h1>
-        <% if(error && error.length > 0) {%>
-          <p class="alert alert-danger"><%=error %></p>
-        <% } %>
+        <div class="container">
+          <% if(error && error.length > 0) { %>
+            <p class="alert alert-danger"><%= error %></p>
+          <% } %>
+
+          <% if(success && success.length > 0) { %>
+              <p class="alert alert-success"><%= success %></p>
+          <% } %>
+        </div>
 
         <% if(meetup && meetup.length > 0){ %>
             <div class="meetup-detail card">

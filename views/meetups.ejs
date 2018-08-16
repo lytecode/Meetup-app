@@ -5,11 +5,19 @@
     <section class="main">
       <div class="container">
         <h1 >View Upcoming Meetups</h1>
+          <div class="container">
+            <% if(error && error.length > 0) { %>
+              <p class="alert alert-danger"><%= error %></p>
+            <% } %>
+
+            <% if(success && success.length > 0) { %>
+                <p class="alert alert-success"><%= success %></p>
+            <% } %>
+          </div>
 
         <% if(meetups.length > 0){  
           for(let i=0; i<meetups.length; i++){  
         %>
-
             <div class="meetup-item row">
                 <div class="picture col-md-3 float-left">
                   <img class="icon img-fluid" src="<%= meetups[i].imageURL %>" alt="<%=meetups[i].group%> Meetup banner" style="height: 10em;">

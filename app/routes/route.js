@@ -191,19 +191,19 @@ router.put('/join/:id', loginRequired, (req, res) => {
 		if(err) return console.log(err);
 
 		//check if the user has registered before
-		console.log(meetup.registered);
 		if(!meetup.registered.includes(currentUser)){
 			meetup.registered.push(currentUser);
 		
 			meetup.save(err => {
 				if(err) return console.log(err);
 
-				res.redirect('/meetups')
+				req.flash('success', 'Thanks for registering for this event');
+				res.redirect('/meetups');
 			});
 		}
 		else{
-			// req.flash('success', 'Thanks for registering for this event');
 			req.flash('error', 'You\'re already registered');
+			res.redirect('/meetup/' + req.params.id);
 		}
 		
 		
