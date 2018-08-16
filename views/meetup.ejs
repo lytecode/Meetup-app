@@ -70,7 +70,7 @@
                       <p><i class="fas fa-map-marker-alt"></i><strong> Venue:</strong> <%=meetup[0].venue %> <br>
                           <i class="fas fa-clock"></i><strong> Time:</strong> <%=meetup[0].time %> prompt
                       </p>
-                      <a class="btn btn-success float-right" href="#">Register</a>
+                      <a class="btn btn-success float-right" href="/join/<%= meetup[0]._id %>" method='POST'>Register</a>
                   </div>
                 </div>
             </div>

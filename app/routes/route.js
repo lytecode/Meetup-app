@@ -97,8 +97,8 @@ router
 	});
 
 //Create an Event and upload an image
-router.get('/createmeetup', loginRequired, (req, res, next) => res.render('createmeetup', {user: req.user}))
-	  .post('/createmeetup', loginRequired, multer(multerConfig).single('image'), (req, res, next) => {
+router.get('/new', loginRequired, (req, res, next) => res.render('createmeetup', {user: req.user}))
+	  .post('/new', loginRequired, multer(multerConfig).single('image'), (req, res, next) => {
 
 	  	let filePath = '/img/default-meetup-image.png'; //default image
 
@@ -121,7 +121,6 @@ router.get('/createmeetup', loginRequired, (req, res, next) => res.render('creat
 				username: req.user.username
 			}
 		});
-
 
 		newMeetup.save((err) => {
 			if(err){
@@ -169,7 +168,6 @@ router.put('/meetup/:id', loginRequired, multer(multerConfig).single('image'), m
 			});
 		})
 
-		console.log(' flexing image upload b4 delete');
 		const regEx = /public\\(?=images)/;  //match words starting with public/images
 		updateMeetup.imageURL = req.file.path.replace(regEx, '\\');
 	}
@@ -188,6 +186,7 @@ router.put('/meetup/:id', loginRequired, multer(multerConfig).single('image'), m
 //save a seat to attend the event
 router.post('/join/:id', loginRequired, (req, res) => {
 	const currentUser = req.user;
+	console.log(currentUser)
 });
 
 
@@ -198,7 +197,7 @@ router.get('/meetups', (req, res, next) => {
 			console.log(err);
 		}
 		
-		res.render('viewmeetups', {
+		res.render('meetups', {
 			meetups: meetups,
 			user: req.user
 		});
