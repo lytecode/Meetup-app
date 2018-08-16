@@ -164,7 +164,7 @@ router.put('/meetup/:id', loginRequired, multer(multerConfig).single('image'), m
 			fs.unlink(thisPath, (err) => {
 				if(err) return console.log(err);
 
-				console.log('file deleted');
+				console.log('previous image file deleted');
 			});
 		})
 
@@ -184,9 +184,30 @@ router.put('/meetup/:id', loginRequired, multer(multerConfig).single('image'), m
 })
 
 //save a seat to attend the event
-router.post('/join/:id', loginRequired, (req, res) => {
-	const currentUser = req.user;
-	console.log(currentUser)
+router.put('/join/:id', loginRequired, (req, res) => {
+	const currentUser = req.user.username;
+
+	Meetup.findById(req.params.id, (err, meetup) => {
+		if(err) return console.log(err);
+
+		//check if the user has registered before
+		console.log(meetup.registered);
+		if(!meetup.registered.includes(currentUser)){
+			meetup.registered.push(currentUser);
+		
+			meetup.save(err => {
+				if(err) return console.log(err);
+
+				res.redirect('/meetups')
+			});
+		}
+		else{
+			// req.flash('success', 'Thanks for registering for this event');
+			req.flash('error', 'You\'re already registered');
+		}
+		
+		
+	})
 });
 
 

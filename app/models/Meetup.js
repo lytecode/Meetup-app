@@ -15,10 +15,11 @@ const meetupSchema = new mongoose.Schema({
 		username: String
 	},
 	registered: [
-		{
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'User'
-		}
+		// {
+		// 	type: mongoose.Schema.Types.ObjectId,
+		// 	ref: 'User'
+		// },
+		// username
 	]
 });
 
