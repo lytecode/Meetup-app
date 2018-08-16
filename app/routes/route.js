@@ -225,13 +225,6 @@ router.get('/meetups', (req, res, next) => {
 	})
 });
 
-router.get('/user/:id', (req, res) => {
-	if(req.user){
-		console.log('got a user:', req.user);
-		const name = req.user.name;
-	}
-})
-
 //router.get('/user/:id')
 router.get('*', (req, res, next) => res.render('404'));
 

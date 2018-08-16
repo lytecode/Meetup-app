@@ -14,13 +14,7 @@ const meetupSchema = new mongoose.Schema({
 		},
 		username: String
 	},
-	registered: [
-		// {
-		// 	type: mongoose.Schema.Types.ObjectId,
-		// 	ref: 'User'
-		// },
-		// username
-	]
+	registered: []
 });
 
 const Meetup = mongoose.model('Meetup', meetupSchema);
