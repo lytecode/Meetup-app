@@ -4,7 +4,7 @@
   "description": "A fullstack node application which handles image upload ",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   "keywords": [
     "meetup",
@@ -14,7 +14,6 @@
   "author": "Mbonu Basil",
   "license": "MIT",
   "dependencies": {
-    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
     "connect-flash": "^0.1.1",
     "dotenv": "^6.0.0",
