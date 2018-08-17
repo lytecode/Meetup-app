@@ -202,7 +202,7 @@ router.put('/join/:id', loginRequired, (req, res) => {
 			});
 		}
 		else{
-			req.flash('error', 'You\'re already registered');
+			req.flash('error', 'You have already registered for this event');
 			res.redirect('/meetup/' + req.params.id);
 		}
 		
