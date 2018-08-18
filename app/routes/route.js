@@ -107,6 +107,7 @@ router.get('/new', loginRequired, (req, res, next) => res.render('createmeetup',
 			const path = req.file.path;
 			const regEx = /public\\(?=images)/;
 			filePath = path.replace(regEx, '\\');
+			console.log('image path: ', filePath);
 		}
 
 		//Create a meetup object
@@ -169,6 +170,7 @@ router.put('/meetup/:id', loginRequired, multer(multerConfig).single('image'), m
 		})
 
 		const regEx = /public\\(?=images)/;  //match words starting with public/images
+		console.log('image path: ', req.file.path.replace(regEx, '\\'));
 		updateMeetup.imageURL = req.file.path.replace(regEx, '\\');
 	}
 
