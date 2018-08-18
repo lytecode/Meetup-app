@@ -1,4 +1,4 @@
-const Meetup = require('../models/meetup');
+const Meetup = require('../models/Meetup');
 
 module.exports = {
     checkUserMeetup: function(req, res, next) {
