@@ -13,7 +13,7 @@ const express =  require('express'),
 	  
 //Requiring routes
 const router = require('./app/routes/route');
-const User = require('./app/models/user');
+const User = require('./app/models/User');
 
 
 const mongodb = require('./config/mongoDB');
