@@ -100,7 +100,7 @@ router
 router.get('/new', loginRequired, (req, res, next) => res.render('createmeetup', {user: req.user}))
 	  .post('/new', loginRequired, multer(multerConfig).single('image'), (req, res, next) => {
 
-	  	let filePath = '/img/default-meetup-image.png'; //default image
+	  	let filePath = '\img\default-meetup-image.png'; //default image
 
 		//Replace default image with User uploaded image
 		if(req.file){
@@ -220,6 +220,8 @@ router.get('/meetups', (req, res, next) => {
 			console.log(err);
 		}
 		
+		//'\\images\\image-20303839494.png'
+		//meetup.imageUrl.replace(/[\\]/g, '/');
 		res.render('meetups', {
 			meetups: meetups,
 			user: req.user
