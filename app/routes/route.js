@@ -104,11 +104,17 @@ router.get('/new', loginRequired, (req, res, next) => res.render('createmeetup',
 
 		//Replace default image with User uploaded image
 		if(req.file){
-			const path = req.file.path;
-			const regEx = /public\\(?=images)/;
-			filePath = path.replace(regEx, '\\');
-			console.log('image path: ', filePath);
+			const path = req.file.path.split('public')[1];
+			console.log('path: ', path);
+			// let newpath = path.split('public')[1];
+			// console.log('new path: ', newpath);
+			
+			//const regEx = /[public/(?=images)]/; 
+			filePath = path;
+			// console.log('image path: ', filePath);
 		}
+
+		console.log('image path: ', filePath);
 
 		//Create a meetup object
 		const newMeetup = new Meetup({
