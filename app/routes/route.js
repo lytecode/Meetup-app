@@ -104,17 +104,10 @@ router.get('/new', loginRequired, (req, res, next) => res.render('createmeetup',
 
 		//Replace default image with User uploaded image
 		if(req.file){
-			const path = req.file.path.split('public')[1];
-			console.log('path: ', path);
-			// let newpath = path.split('public')[1];
-			// console.log('new path: ', newpath);
-			
-			//const regEx = /[public/(?=images)]/; 
+			/* /public/images/image-23444775950.png */
+			const path = req.file.path.split('public')[1]; //take other paths after /public i.e /images/image-234...png
 			filePath = path;
-			// console.log('image path: ', filePath);
 		}
-
-		console.log('image path: ', filePath);
 
 		//Create a meetup object
 		const newMeetup = new Meetup({
@@ -165,7 +158,7 @@ router.put('/meetup/:id', loginRequired, multer(multerConfig).single('image'), m
 		//find the previous uploaded image and remove it from public/images path
 		Meetup.findById(req.params.id, (err, meetup) => {
 			if(err){
-				req.flash('error', 'You must be doing something illegal! :)');
+				console.log(`Error occured: ${err}`);
 			}
 			const thisPath = './public'+meetup.imageURL;
 			fs.unlink(thisPath, (err) => {
@@ -175,9 +168,8 @@ router.put('/meetup/:id', loginRequired, multer(multerConfig).single('image'), m
 			});
 		})
 
-		const regEx = /public\\(?=images)/;  //match words starting with public/images
-		console.log('image path: ', req.file.path.replace(regEx, '\\'));
-		updateMeetup.imageURL = req.file.path.replace(regEx, '\\');
+		//set the new image path
+		updateMeetup.imageURL = req.file.path.split('public')[1];
 	}
 
 	//update the meetup
@@ -226,8 +218,6 @@ router.get('/meetups', (req, res, next) => {
 			console.log(err);
 		}
 		
-		//'\\images\\image-20303839494.png'
-		//meetup.imageUrl.replace(/[\\]/g, '/');
 		res.render('meetups', {
 			meetups: meetups,
 			user: req.user
