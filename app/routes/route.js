@@ -11,9 +11,9 @@ const middleware = require('../middleware/index');
 //multer configuration
 const multerConfig = {
 	storage: multer.diskStorage({
-		destination: function(req, file, next){
-			next(null, './public/images');
-		},
+		// destination: function(req, file, next){
+		// 	next(null, './public/images');
+		// },
 		filename: function(req, file, next){
 			const originalName = file.originalname.split('.')[0];
 			const ext = file.mimetype.split('/')[1];
@@ -109,16 +109,9 @@ router
 router.get('/new', loginRequired, (req, res, next) => res.render('createmeetup', {user: req.user}))
 	  .post('/new', loginRequired, multer(multerConfig).single('image'), (req, res, next) => {
 
-	  	//const image = 'https://res.cloudinary.com/lytecode/image/upload/v1535077637/qsh0lnfftbfd5rscjhql.png';
-
-		// if(req.file){
-		// 	image = req.file.path;
-		// }
-
-		// console.log('path: ',req.file.path);
-
 		cloudinary.v2.uploader.upload(req.file.path, (err, result) => {
 			if(err){
+				console.log(err);
 				req.flash('error', err.message);
 				return res.redirect('back');
 			}
@@ -143,6 +136,7 @@ router.get('/new', loginRequired, (req, res, next) => res.render('createmeetup',
 					console.log(err);
 					return res.redirect('back');
 				}
+				req.flash('success', 'New Meetup created Successfully!');
 				res.redirect('/meetups');
 			});
 
