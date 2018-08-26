@@ -15,8 +15,9 @@ const multerConfig = {
 			next(null, './public/images');
 		},
 		filename: function(req, file, next){
+			const originalName = file.originalname.split('.')[0];
 			const ext = file.mimetype.split('/')[1];
-			next(null, file.fieldname + '-' + Date.now() + '.' + ext);
+			next(null, originalName + '-' + Date.now() + '.' + ext);
 		}
 	}),
 	filefilter: function(req, file, next){
@@ -32,6 +33,14 @@ const multerConfig = {
 		}
 	}
 }
+
+//setup cloudinary
+const cloudinary = require('cloudinary');
+cloudinary.config({
+	cloud_name: process.env.cloud_name,
+	api_key: process.env.API_Key,
+	api_secret: process.env.API_Secret
+});
 
 
 function loginRequired(req, res, next){
@@ -100,35 +109,44 @@ router
 router.get('/new', loginRequired, (req, res, next) => res.render('createmeetup', {user: req.user}))
 	  .post('/new', loginRequired, multer(multerConfig).single('image'), (req, res, next) => {
 
-	  	let filePath = '\img\default-meetup-image.png'; //default image
+	  	//const image = 'https://res.cloudinary.com/lytecode/image/upload/v1535077637/qsh0lnfftbfd5rscjhql.png';
 
-		//Replace default image with User uploaded image
-		if(req.file){
-			/* /public/images/image-23444775950.png */
-			const path = req.file.path.split('public')[1]; //take other paths after /public i.e /images/image-234...png
-			filePath = path;
-		}
+		// if(req.file){
+		// 	image = req.file.path;
+		// }
 
-		//Create a meetup object
-		const newMeetup = new Meetup({
-			group: req.body.group,
-			topic: req.body.topic,
-			venue: req.body.venue,
-			time: req.body.time,
-			imageURL: filePath,
-			author: {
-				id: req.user._id,
-				username: req.user.username
-			}
-		});
+		// console.log('path: ',req.file.path);
 
-		newMeetup.save((err) => {
+		cloudinary.v2.uploader.upload(req.file.path, (err, result) => {
 			if(err){
-				console.log(err)
+				req.flash('error', err.message);
+				return res.redirect('back');
 			}
-			res.redirect('/meetups')
-		})
-		
+
+			//Create a meetup object
+			const newMeetup = new Meetup({
+				group: req.body.group,
+				topic: req.body.topic,
+				venue: req.body.venue,
+				time: req.body.time,
+				imageURL: result.secure_url,
+				imageId: result.public_id,
+				author: {
+					id: req.user._id,
+					username: req.user.username
+				}
+			});
+
+			newMeetup.save((err) => {
+				if(err){
+					req.flash('error', err.message);
+					console.log(err);
+					return res.redirect('back');
+				}
+				res.redirect('/meetups');
+			});
+
+		});	
 	});
 
 //View a single event
@@ -146,41 +164,39 @@ router.get('/meetup/:id', (req, res, next) => {
 //Edit an event or meetup
 router.put('/meetup/:id', loginRequired, multer(multerConfig).single('image'), middleware.checkUserMeetup, (req, res) => {
 	
-	const updateMeetup = {
-		group: req.body.group,
-		topic: req.body.topic,
-		venue: req.body.venue,
-		time: req.body.time
-	};
-
-	//add image path on image upload
-	if(req.file){
-		//find the previous uploaded image and remove it from public/images path
-		Meetup.findById(req.params.id, (err, meetup) => {
-			if(err){
-				console.log(`Error occured: ${err}`);
-			}
-			const thisPath = './public'+meetup.imageURL;
-			fs.unlink(thisPath, (err) => {
-				if(err) return console.log(err);
-
-				console.log('previous image file deleted');
-			});
-		})
-
-		//set the new image path
-		updateMeetup.imageURL = req.file.path.split('public')[1];
-	}
-
-	//update the meetup
-	Meetup.findByIdAndUpdate(req.params.id, { $set: updateMeetup }, (err, meetup) => {
+	Meetup.findById(req.params.id, async (err, meetup) => {
 		if(err){
-			console.log(err);
-			res.redirect('back');
-		}else{
-			res.redirect('/meetup/' + req.params.id);
+			req.flash('error', err);
+			return res.redirect('back');
 		}
+		else{
+			if(req.file){
+				try {
+					await cloudinary.v2.uploader.destroy(meetup.imageId);
+					const result = await cloudinary.v2.uploader.upload(req.file.path);
+
+					meetup.imageId = result.public_id;
+					meetup.imageURL = result.secure_url;
+					
+				} catch (err) {
+					req.flash('error', err);
+					return res.redirect('back');
+				}
+				
+			}
+			//image was not changed
+			meetup.group = req.body.group;
+			meetup.topic = req.body.topic;
+			meetup.venue = req.body.venue;
+			meetup.time = req.body.time;
+
+			meetup.save();
+			req.flash('success', 'Meetup Successfully Updated');
+			res.redirect('/meetups');
+		}
+	
 	})
+
 })
 
 //save a seat to attend the event
