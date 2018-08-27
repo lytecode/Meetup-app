@@ -11,9 +11,6 @@ const middleware = require('../middleware/index');
 //multer configuration
 const multerConfig = {
 	storage: multer.diskStorage({
-		// destination: function(req, file, next){
-		// 	next(null, './public/images');
-		// },
 		filename: function(req, file, next){
 			const originalName = file.originalname.split('.')[0];
 			const ext = file.mimetype.split('/')[1];

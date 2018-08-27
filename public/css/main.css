@@ -21,13 +21,18 @@
   box-shadow: 5px 10px teal;
 }
 
-.container h1{
+.index{
+  margin-top: -50px;
   text-align: center;
-  margin: 10px 0 10px 0;
+  /* margin: 10px 0 10px 0; */
+}
+
+.index h1{
+  color: #dc3545;
+  font-family: fantasy;
 }
 
 .description{
-  /* background-color: brown; */
   color: black;
   margin: auto;
   margin-top: 10px;
@@ -72,10 +77,9 @@
 .text{
   margin: auto;
 }
-
-/* .alert{
-  margin-top: 7%;
-} */
+.py-5 h1{
+  text-align: center;
+}
 footer{
   border-top: 3px solid #dc3545!important;
 }
