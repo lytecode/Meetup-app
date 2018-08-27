@@ -31,6 +31,9 @@
   color: #dc3545;
   font-family: fantasy;
 }
+.container h1{
+  text-align: center;
+}
 
 .description{
   color: black;
