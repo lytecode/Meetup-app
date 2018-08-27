@@ -4,7 +4,7 @@
 - Nodejs
 - Expressjs 
 - MongoDB
-E- js
+- Ejs
 - Passport
 - Multer - for Form image upload
 -Cloudinary - for Cloud image storage
