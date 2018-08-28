@@ -200,6 +200,8 @@ router.delete('/meetup/:id', loginRequired, middleware.checkUserMeetup, (req, re
 			//remove or delete the image from cloudinary
 			await cloudinary.v2.uploader.destroy(meetup.imageId);
 			meetup.remove();
+			req.flash('success', 'Meetup deleted Successfully!');
+			res.redirect('/meetups');
 		} catch(err){
 			console.log(err);
 			req.flash('error', 'Kindly check your network connection');

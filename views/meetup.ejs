@@ -81,8 +81,8 @@
                       <form action="/join/<%= meetup[0]._id %>?_method=PUT" method="POST">
                         <button class="btn btn-success float-right">Register</button>
                       </form>
-                      <form action="/meetup/<%= meetup[0]._id %>?_method=DELETE" method="POST">
-                        <button class="btn btn-danger float-left">Delete</button>
+                      <form action="/meetup/<%= meetup[0]._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Are you sure you want to delete this meetup?');">
+                        <button type="submit" class="btn btn-danger float-left">Delete</button>
                       </form>
                   </div>
                 </div>
