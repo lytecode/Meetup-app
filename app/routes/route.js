@@ -186,9 +186,27 @@ router.put('/meetup/:id', loginRequired, multer(multerConfig).single('image'), m
 			res.redirect('/meetups');
 		}
 	
-	})
+	});
+});
 
-})
+//Delete a Meetup
+router.delete('/meetup/:id', loginRequired, middleware.checkUserMeetup, (req, res) => {
+	Meetup.findById(req.params.id, async (err, meetup) => {
+		if(err){
+			req.flash('error', err);
+			return res.redirect('back');
+		}
+		try{
+			//remove or delete the image from cloudinary
+			await cloudinary.v2.uploader.destroy(meetup.imageId);
+			meetup.remove();
+		} catch(err){
+			console.log(err);
+			req.flash('error', 'Kindly check your network connection');
+			return res.redirect('back');
+		}
+	});
+});
 
 //save a seat to attend the event
 router.put('/join/:id', loginRequired, (req, res) => {
