@@ -35,12 +35,22 @@
   text-align: center;
 }
 
-.description{
+.description, .meetups__description{
   color: black;
   margin: auto;
   margin-top: 10px;
   margin-bottom: 10px;
+  text-align: center;
 }
+
+.meetups__description{
+  font-family: monospace;
+  font-size: 14px;
+}
+.meetups__views{
+  margin: 20px;;
+}
+
 
 .center-btn{
   margin: auto 0 auto 0;
@@ -85,4 +95,24 @@
 }
 footer{
   border-top: 3px solid #dc3545!important;
+}
+
+.meetup__image{
+  height: 250px;
+  width: 50vw;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media only screen and (max-width: 300px){
+  .meetup__image{
+    height: 100px;
+  }
+}
+
+@media only screen and (max-width: 375px){
+  .meetup__image{
+    height: 200px;
+  }
 }
