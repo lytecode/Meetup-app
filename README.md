@@ -17,7 +17,8 @@
 3. View all Events (no authorization and unauthorization required)
 4. Create an event (only authenticated user)
 5. Edit or Update a already created event (by the Creator or Admin)
-6. Register to attend an Event (Login Required), etc
+6. Delete a Meetup (authentiaction and authorization required)
+7. Register to attend an Event (Login Required), etc
 
 This app is hosted on *Heroku* and can be tested via this link [DevSquare](https://meetupdev.herokuapp.com/)
 
