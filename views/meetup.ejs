@@ -72,10 +72,10 @@
                   <img class="img-fluid meetup__image" src="<%= meetup[0].imageURL %>" alt="<%= meetup[0].group %> banner">
                   
                   <div class="description col-md-8 float-right">
-                      <h6 class="description__item"><strong> Topic: </strong> <%=meetup[0].topic %></h6>
-                      <p class="description__item><i class="fas fa-map-marker-alt"></i><strong> Venue:</strong> <%=meetup[0].venue %> <br>
-                          <i class="fas fa-clock"></i><strong> Date:</strong> <%=meetup[0].time.split('T')[0] %> 
-                          <i class="fas fa-clock"></i><strong>   Time:</strong> <%=meetup[0].time.split('T')[1] %> WAT prompt
+                      <h6 class="description__item"><i class="fas fa-users"></i> <%=meetup[0].topic %></h6>
+                      <p class="description__item"><i class="fas fa-map-marker-alt"></i> <%=meetup[0].venue %> <br>
+                          <i class="fas fa-calendar-alt"></i> <%=meetup[0].time.split('T')[0] %> 
+                          <i class="fas fa-clock"></i> <%=meetup[0].time.split('T')[1] %> WAT prompt
                       </p>
                       <!-- <a class="btn btn-success float-right" href="/join/<%= meetup[0]._id %>">Register</a> -->
                       <form action="/join/<%= meetup[0]._id %>?_method=PUT" method="POST">

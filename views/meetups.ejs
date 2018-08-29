@@ -23,9 +23,9 @@
                   <img class="icon img-fluid" src="<%= meetups[i].imageURL %>" alt="<%=meetups[i].group%> Meetup banner" style="height: 10em;">
                 </div>
                 <div class="meetups__description col-md-7 float-right">
-                  <div class="details"><strong><%=meetups[i].group%>:</strong> <%= meetups[i].topic %></div>
+                  <div class="details"><i class="fas fa-users"></i> <strong><%= meetups[i].group%>:</strong> <%= meetups[i].topic %></div>
                   <div class="details"><i class="fas fa-map-marker-alt"></i> <%= meetups[i].venue %></div>
-                  <div class="details"><i class="fas fa-clock"></i> <%= meetups[i].time.split('T')[0] %></div>
+                  <div class="details"><i class="fas fa-calendar-alt"></i> <%= meetups[i].time.split('T')[0] %></div>
                   <div class="details"><i class="fas fa-clock"></i> <%= meetups[i].time.split('T')[1] %> WAT</div>
                   <a class="btn btn-info float-right meetups__views" href="/meetup/<%= meetups[i]._id %>">View meetup</a>
                 </div>
