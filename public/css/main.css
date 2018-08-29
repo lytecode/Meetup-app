@@ -51,7 +51,6 @@
   margin: 20px;;
 }
 
-
 .center-btn{
   margin: auto 0 auto 0;
 }
@@ -115,4 +114,9 @@ footer{
   .meetup__image{
     height: 200px;
   }
+}
+
+img.center{
+  display: block;
+  margin: 0 auto;
 }
